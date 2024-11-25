@@ -1,0 +1,24 @@
+/* src/components/Projection.css */
+
+.projection-section {
+    padding: 20px;
+}
+
+.projection-input {
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1rem;
+}
+
+.projection-input input {
+    padding: 5px;
+    font-size: 1rem;
+    width: 60px;
+}
+
+.projection-chart {
+    position: relative;
+    height: 400px;
+}

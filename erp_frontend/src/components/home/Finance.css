@@ -1,0 +1,10 @@
+/* src/components/finance/Finance.css */
+.finance-container, .inventory-container {
+    display: flex;
+    width: 100%; /* Optional: Adjust width as desired */
+    max-width: 1200px; /* Optional: Constrain max width */
+    background-color: white; /* Optional: Background color */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: Box shadow for better visibility */
+    border-radius: 8px; /* Optional: Rounded corners */
+}
+

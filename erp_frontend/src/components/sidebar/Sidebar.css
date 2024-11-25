@@ -1,0 +1,32 @@
+/* src/components/Sidebar.css */
+
+.sidebar {
+    width: 200px;
+    background-color: #003366;
+    color: white;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.sidebar h3 {
+    margin-bottom: 20px;
+}
+
+.sidebar ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.sidebar li {
+    padding: 10px 0;
+    cursor: pointer;
+    transition: background-color 0.2s ease, padding-left 0.2s ease;
+}
+
+.sidebar li.active,
+.sidebar li:hover {
+    background-color: #ffdd57;
+    color: #003366;
+    border-radius: 4px;
+    padding-left: 10px;
+}
