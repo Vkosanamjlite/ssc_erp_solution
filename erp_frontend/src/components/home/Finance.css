@@ -1,5 +1,5 @@
 /* src/components/finance/Finance.css */
-.finance-container, .inventory-container {
+.finance-container, .inventory-container, .seo-container {
     display: flex;
     width: 100%; /* Optional: Adjust width as desired */
     max-width: 1200px; /* Optional: Constrain max width */
