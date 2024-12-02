@@ -8,6 +8,9 @@ import Inventory from './components/home/Inventory';
 import Sales from './components/home/Sales';
 import HumanResources from './components/home/HumanResources';
 import Finance from './components/home/Finance';
+import SEOManagement from "./components/seo/SEOManagement";
+import Signup from "./components/uam/Signup";
+import Login from "./components/uam/Login";
 import './App.css';
 
 function App() {
@@ -21,6 +24,9 @@ function App() {
                     <Route path="/sales" element={<Sales />} />
                     <Route path="/hr" element={<HumanResources />} />
                     <Route path="/finance" element={<Finance />} />
+                    <Route path="/seo" element={<SEOManagement />} />
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/register" element={<Signup />} />
                 </Routes>
             </main>
             <Footer />

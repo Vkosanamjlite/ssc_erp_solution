@@ -1,0 +1,29 @@
+/* General styles for all components */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+}
+table th, table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+table th {
+    background-color: #f4f4f4;
+}
+form {
+    margin-top: 20px;
+}
+form input, form textarea, form button {
+    display: block;
+    margin: 10px 0;
+    padding: 10px;
+    width: 100%;
+}
+.filter-container {
+    margin-bottom: 20px;
+}
+.filter-container label {
+    margin-right: 10px;
+}

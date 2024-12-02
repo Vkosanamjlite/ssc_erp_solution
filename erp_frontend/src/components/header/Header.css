@@ -77,9 +77,9 @@
 }
 
 .user-menu {
-    display: none;
+    display: none; /* Initially hidden */
     position: absolute;
-    top: 30px;
+    top: 100%; /* Directly below the header-user */
     right: 0;
     background-color: #fff;
     color: #333;
@@ -87,21 +87,30 @@
     overflow: hidden;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     width: 120px;
+    z-index: 10; /* Ensure it appears on top */
+    padding: 5px 0; /* Add padding inside the dropdown */
 }
 
-.user-menu a {
+.user-menu a, .user-menu button {
     display: block;
     padding: 10px;
     color: #333;
     text-decoration: none;
     font-size: 0.9rem;
+    text-align: left;
+    width: 100%; /* Full width for buttons */
+    border: none;
+    background: none;
+    cursor: pointer;
     transition: background 0.2s ease;
 }
 
-.user-menu a:hover {
+.user-menu a:hover, .user-menu button:hover {
     background-color: #f0f0f0;
 }
 
-.header-user:hover .user-menu {
+/* Ensure menu visibility when hovering over header-user or user-menu */
+.header-user:hover .user-menu,
+.user-menu:hover {
     display: block;
 }
