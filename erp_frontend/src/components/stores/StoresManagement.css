@@ -1,0 +1,43 @@
+.store-container {
+    display: flex;
+}
+
+.sidebar {
+    width: 200px;
+    background-color: #f4f4f4;
+    padding: 20px;
+    border-right: 1px solid #ddd;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar ul li {
+    padding: 10px;
+    cursor: pointer;
+}
+
+.sidebar ul li.active {
+    background-color: #007bff;
+    color: white;
+}
+
+.section-content {
+    flex: 1;
+    padding: 20px;
+}
+
+.dashboard-metrics {
+    display: flex;
+    gap: 20px;
+}
+
+.metric {
+    background-color: #f4f4f4;
+    padding: 20px;
+    border: 1px solid #ddd;
+    flex: 1;
+    text-align: center;
+}
