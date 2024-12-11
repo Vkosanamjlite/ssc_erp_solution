@@ -1,0 +1,32 @@
+.store-list {
+    padding: 20px;
+}
+
+.filter-section {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.filter-section input,
+.filter-section select {
+    padding: 8px;
+    font-size: 14px;
+}
+
+.store-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.store-table th,
+.store-table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+}
+
+.store-table tr:hover {
+    background-color: #f4f4f4;
+    cursor: pointer;
+}

@@ -1,0 +1,38 @@
+.store-view {
+    display: flex;
+    padding: 20px;
+}
+
+.left-nav {
+    width: 200px;
+    border-right: 1px solid #ddd;
+    padding: 10px;
+}
+
+.left-nav ul {
+    list-style: none;
+    padding: 0;
+}
+
+.left-nav ul li {
+    margin: 10px 0;
+}
+
+.left-nav ul li a {
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+}
+
+.left-nav ul li a:hover {
+    color: #007bff;
+}
+
+.store-details {
+    margin-left: 220px;
+    padding: 20px;
+}
+
+.store-details h2 {
+    margin-bottom: 20px;
+}

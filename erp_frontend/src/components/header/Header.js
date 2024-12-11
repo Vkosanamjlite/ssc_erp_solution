@@ -33,6 +33,7 @@ function Header() {
                     <li><Link to="/hr">Human Resources</Link></li>
                     <li><Link to="/finance">Finance</Link></li>
                     <li><Link to="/seo">SEO</Link></li>
+                    <li><Link to="/stores">Stores</Link></li>
                 </ul>
             </nav>
             <div className="header-search">
