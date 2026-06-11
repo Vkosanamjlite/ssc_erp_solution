@@ -1,6 +1,6 @@
 // src/components/seo/SEOManagement.js
 import React, {useState} from 'react';
-import Sidebar from "../sidebar/Sidebar";
+import Sidebar from "../../shared/Sidebar";
 import KeywordSuggestions from "./KeywordSuggestions";
 import MarketResearch from "./MarketResearch";
 import GoogleTrends from "./GoogleTrends";

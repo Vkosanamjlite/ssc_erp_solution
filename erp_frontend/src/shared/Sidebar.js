@@ -1,6 +1,6 @@
 // src/components/Sidebar.js
 import React from 'react';
-import './Sidebar.css';
+import '../assets/styles/Sidebar.css';
 
 function Sidebar({ title, sections, selectedSection, setSelectedSection }) {
     return (

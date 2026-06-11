@@ -1,4 +1,3 @@
-// src/components/finance/Accounts.js
 import React, { useState, useEffect } from 'react';
 import Pagination from './Pagination';
 import AccountForm from './AccountForm';
@@ -18,6 +17,7 @@ function Accounts() {
         const fetchAccounts = async () => {
             try {
                 const response = await fetch('/api/finance/accounts/');
+                if (!response.ok) throw new Error('Failed to fetch accounts');
                 const data = await response.json();
                 setAccounts(data);
             } catch (error) {
@@ -51,10 +51,12 @@ function Accounts() {
 
     // Handle Delete Account
     const handleDelete = async (id) => {
+        if (!window.confirm("Are you sure you want to delete this account?")) return;
         try {
-            await fetch(`/api/finance/accounts/${id}/`, {
+            const response = await fetch(`/api/finance/accounts/${id}/`, {
                 method: 'DELETE',
             });
+            if (!response.ok) throw new Error('Failed to delete account');
             setAccounts(accounts.filter(account => account.id !== id));
         } catch (error) {
             console.error("Error deleting account:", error);
@@ -76,12 +78,20 @@ function Accounts() {
                     body: JSON.stringify(accountData),
                 });
 
+            if (!response.ok) throw new Error('Failed to save account');
             const savedAccount = await response.json();
-            if (selectedAccount) {
-                setAccounts(accounts.map((acc) => (acc.id === savedAccount.id ? savedAccount : acc)));
-            } else {
-                setAccounts([...accounts, savedAccount]);
-            }
+
+            setAccounts((prevAccounts) => {
+                if (selectedAccount) {
+                    // Replace updated account
+                    return prevAccounts.map((acc) =>
+                        acc.id === savedAccount.id ? savedAccount : acc
+                    );
+                } else {
+                    // Add new account
+                    return [...prevAccounts, savedAccount];
+                }
+            });
 
             setShowModal(false);
             setSelectedAccount(null);
@@ -100,7 +110,7 @@ function Accounts() {
         <div className="accounts-section">
             <div className="accounts-header">
                 <h3>Accounts</h3>
-                <button onClick={handleAddClick} className="add-account-btn">+</button>
+                <button onClick={handleAddClick} className="add-account-btn">+ Add Account</button>
             </div>
 
             <div className="search-bar">
@@ -129,8 +139,18 @@ function Accounts() {
                             <td>{account.account_type}</td>
                             <td>{account.balance}</td>
                             <td className="table-action">
-                                <button onClick={() => handleEditClick(account)} className="edit-btn">Edit</button>
-                                <button onClick={() => handleDelete(account.id)} className="delete-btn">Delete</button>
+                                <button
+                                    onClick={() => handleEditClick(account)}
+                                    className="edit-btn"
+                                >
+                                    Edit
+                                </button>
+                                <button
+                                    onClick={() => handleDelete(account.id)}
+                                    className="delete-btn"
+                                >
+                                    Delete
+                                </button>
                             </td>
                         </tr>
                     ))}

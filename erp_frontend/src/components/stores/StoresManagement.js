@@ -1,6 +1,6 @@
 // src/components/stores/StoresManagement.js
 import React, {useState} from 'react';
-import Sidebar from "../sidebar/Sidebar";
+import Sidebar from "../../shared/Sidebar";
 import st
 
 import Reports from "./Reports";

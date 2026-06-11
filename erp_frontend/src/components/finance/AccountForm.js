@@ -1,91 +1,85 @@
-// src/components/AccountForm.js
 import React, { useState, useEffect } from 'react';
-import './AccountForm.css';
+import PropTypes from 'prop-types';
 
-function AccountForm({ account, onSave, onCancel }) {
-    // Set initial state for form fields based on whether account data is provided
-    const [name, setName] = useState(account ? account.name : '');
-    const [accountType, setAccountType] = useState(account ? account.account_type : '');
-    const [description, setDescription] = useState(account ? account.description : '');
-    const [errors, setErrors] = useState({});
+const AccountForm = ({ account, onSave, onCancel }) => {
+    const [formData, setFormData] = useState({
+        name: '',
+        account_type: '',
+        balance: 0.0,
+    });
 
-    // Update form fields if account data changes
+    // Prefill form if editing an account
     useEffect(() => {
         if (account) {
-            setName(account.name);
-            setAccountType(account.account_type);
-            setDescription(account.description);
-        } else {
-            setName('');
-            setAccountType('');
-            setDescription('');
+            setFormData({
+                name: account.name,
+                account_type: account.account_type,
+                balance: account.balance,
+            });
         }
     }, [account]);
 
-    // Validate the form fields
-    const validate = () => {
-        const errors = {};
-        if (!name) errors.name = "Account name is required.";
-        if (!accountType) errors.accountType = "Account type is required.";
-        return errors;
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData({ ...formData, [name]: value });
     };
 
-    // Handle form submission
     const handleSubmit = (e) => {
         e.preventDefault();
-        const formErrors = validate();
-        if (Object.keys(formErrors).length === 0) {
-            onSave({ name, account_type: accountType, description });
+        if (typeof onSave === 'function') {
+            onSave(formData); // Call the onSave prop
         } else {
-            setErrors(formErrors);
+            console.error('onSave is not a valid function');
         }
     };
 
     return (
-        <div className="account-form">
-            <h2>{account ? 'Edit Account' : 'Add Account'}</h2>
-            <form onSubmit={handleSubmit}>
-                <div className="form-group">
-                    <label>Account Name</label>
-                    <input
-                        type="text"
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
-                    />
-                    {errors.name && <span className="error">{errors.name}</span>}
-                </div>
+        <form onSubmit={handleSubmit}>
+            <label>Name:</label>
+            <input
+                type="text"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+                required
+            />
 
-                <div className="form-group">
-                    <label>Account Type</label>
-                    <select
-                        value={accountType}
-                        onChange={(e) => setAccountType(e.target.value)}
-                    >
-                        <option value="">Select Account Type</option>
-                        <option value="ASSET">Asset</option>
-                        <option value="LIABILITY">Liability</option>
-                        <option value="EQUITY">Equity</option>
-                        <option value="REVENUE">Revenue</option>
-                        <option value="EXPENSE">Expense</option>
-                    </select>
-                    {errors.accountType && <span className="error">{errors.accountType}</span>}
-                </div>
+            <label>Account Type:</label>
+            <select
+                name="account_type"
+                value={formData.account_type}
+                onChange={handleChange}
+                required
+            >
+                <option value="">Select Type</option>
+                <option value="asset">Asset</option>
+                <option value="liability">Liability</option>
+                <option value="income">Income</option>
+                <option value="expense">Expense</option>
+                <option value="equity">Equity</option>
+            </select>
 
-                <div className="form-group">
-                    <label>Description</label>
-                    <textarea
-                        value={description}
-                        onChange={(e) => setDescription(e.target.value)}
-                    />
-                </div>
+            <label>Balance:</label>
+            <input
+                type="number"
+                name="balance"
+                value={formData.balance}
+                onChange={handleChange}
+                required
+            />
 
-                <div className="form-actions">
-                    <button type="submit" className="save-btn">{account ? 'Update Account' : 'Add Account'}</button>
-                    <button type="button" className="cancel-btn" onClick={onCancel}>Cancel</button>
-                </div>
-            </form>
-        </div>
+            <div className="form-actions">
+                <button type="submit">Save</button>
+                <button type="button" onClick={onCancel}>Cancel</button>
+            </div>
+        </form>
     );
-}
+};
+
+AccountForm.propTypes = {
+    account: PropTypes.object,
+    onSave: PropTypes.func.isRequired,
+    onCancel: PropTypes.func.isRequired,
+};
 
 export default AccountForm;
