@@ -1,8 +1,8 @@
 // src/App.js
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Header from './components/header/Header';
-import Footer from "./components/footer/Footer";
+import Header from './shared/Header';
+import Footer from "./shared/Footer";
 import Dashboard from './components/home/Dashboard';
 import Inventory from './components/home/Inventory';
 import Sales from './components/home/Sales';
@@ -27,6 +27,7 @@ function App() {
                     <Route path="/seo" element={<SEOManagement />} />
                     <Route path="/login" element={<Login />} />
                     <Route path="/register" element={<Signup />} />
+
                 </Routes>
             </main>
             <Footer />

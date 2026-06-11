@@ -20,7 +20,7 @@ python manage.py migrate
 python manage.py makemigrations 
 
 docker build --build-arg DEV=true .
-
+  
 
 -- Create super user
 python manage.py createsuperuser

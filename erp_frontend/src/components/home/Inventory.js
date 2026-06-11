@@ -1,6 +1,6 @@
 // src/components/home/Inventory.js
 import React, { useState } from 'react';
-import Sidebar from "../sidebar/Sidebar";
+import Sidebar from "../../shared/Sidebar";
 import Products from "../inventory/Products";
 import Stock from "../inventory/Stock";
 import Warehouse from "../inventory/Warehouse";

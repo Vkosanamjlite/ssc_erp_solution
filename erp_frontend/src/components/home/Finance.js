@@ -1,6 +1,6 @@
 // src/components/home/Finance.js
 import React, { useState } from 'react';
-import Sidebar from "../sidebar/Sidebar";
+import Sidebar from "../../shared/Sidebar";
 import Accounts from "../finance/Accounts";
 import Transactions from "../finance/Transactions";
 import Report from "../finance/Report";
@@ -10,6 +10,30 @@ import './Finance.css';
 function Finance() {
     const [selectedSection, setSelectedSection] = useState('Accounts');
     const financeSections = ['Accounts', 'Transactions', 'Projections', 'Budget', 'Reports'];
+
+    const handleAccountSubmit = (formData) => {
+        console.log('Form Data Submitted:', formData);
+
+        fetch('/api/finance/accounts/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(formData),
+        })
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error('Failed to create account');
+                }
+                return response.json();
+            })
+            .then((data) => {
+                console.log('Account created successfully:', data);
+            })
+            .catch((error) => {
+                console.error('Error creating account:', error);
+            });
+    };
 
     const renderSection = () => {
         switch (selectedSection) {
@@ -22,7 +46,7 @@ function Finance() {
             case 'Projections':
                 return <Projection />;
             default:
-                return <Accounts />;
+                return <Accounts onSubmit={handleAccountSubmit} />;
         }
     };
 

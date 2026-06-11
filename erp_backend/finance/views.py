@@ -1,66 +1,147 @@
-# finance/views.py
-from rest_framework import viewsets, status
-from rest_framework.views import APIView
+from rest_framework import generics, status
 from rest_framework.response import Response
-from .models import Account, Transaction, Projection
-from .serializers import AccountSerializer, TransactionSerializer, ProjectionSerializer
+from .models import (
+    Account, Vendor, Customer, Invoice, Transaction, Ledger,
+    FixedAsset, Expense, Budget, Employee, Payroll,
+    Company, AuditLog, FinancialMetric
+)
+from .serializers import (
+    AccountSerializer, VendorSerializer, CustomerSerializer, InvoiceSerializer,
+    TransactionSerializer, LedgerSerializer, FixedAssetSerializer,
+    ExpenseSerializer, BudgetSerializer, EmployeeSerializer, PayrollSerializer,
+    CompanySerializer, AuditLogSerializer, FinancialMetricSerializer
+)
 
-
-class AccountViewSet(viewsets.ModelViewSet):
+# 1. General Accounting Views
+class AccountListCreateView(generics.ListCreateAPIView):
     queryset = Account.objects.all()
     serializer_class = AccountSerializer
 
 
-class TransactionViewSet(viewsets.ModelViewSet):
+class AccountDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Account.objects.all()
+    serializer_class = AccountSerializer
+
+
+# 2. Accounts Payable and Receivable
+class VendorListCreateView(generics.ListCreateAPIView):
+    queryset = Vendor.objects.all()
+    serializer_class = VendorSerializer
+
+
+class VendorDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Vendor.objects.all()
+    serializer_class = VendorSerializer
+
+
+class CustomerListCreateView(generics.ListCreateAPIView):
+    queryset = Customer.objects.all()
+    serializer_class = CustomerSerializer
+
+
+class CustomerDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Customer.objects.all()
+    serializer_class = CustomerSerializer
+
+
+class InvoiceListCreateView(generics.ListCreateAPIView):
+    queryset = Invoice.objects.all()
+    serializer_class = InvoiceSerializer
+
+
+class InvoiceDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Invoice.objects.all()
+    serializer_class = InvoiceSerializer
+
+
+# 3. General Ledger Views
+class TransactionListCreateView(generics.ListCreateAPIView):
     queryset = Transaction.objects.all()
     serializer_class = TransactionSerializer
 
 
-class ProjectionView(APIView):
-    def get_average_monthly_income_expense(self):
-        monthly_income = {}
-        monthly_expense = {}
+class TransactionDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Transaction.objects.all()
+    serializer_class = TransactionSerializer
 
-        # Group transactions by month and calculate totals for income and expense
-        transactions = Transaction.objects.all()
-        for transaction in transactions:
-            date = transaction.date
-            month_year = f"{date.year}-{date.month}"
 
-            if transaction.transaction_type == 'INCOME':
-                monthly_income[month_year] = monthly_income.get(month_year, 0) + transaction.amount
-            elif transaction.transaction_type == 'EXPENSE':
-                monthly_expense[month_year] = monthly_expense.get(month_year, 0) + transaction.amount
+class LedgerListView(generics.ListAPIView):
+    queryset = Ledger.objects.all()
+    serializer_class = LedgerSerializer
 
-        # Calculate average monthly income and expense, with safe division
-        average_income = sum(monthly_income.values()) / (len(monthly_income) or 1)
-        average_expense = sum(monthly_expense.values()) / (len(monthly_expense) or 1)
 
-        return average_income, average_expense
+# 4. Fixed Asset Management Views
+class FixedAssetListCreateView(generics.ListCreateAPIView):
+    queryset = FixedAsset.objects.all()
+    serializer_class = FixedAssetSerializer
 
-    def get(self, request, *args, **kwargs):
-        # Retrieve the number of months for projection from query params
-        try:
-            months = int(request.query_params.get('months', 1))
-        except ValueError:
-            return Response({"error": "Invalid months parameter"}, status=status.HTTP_400_BAD_REQUEST)
 
-        # Calculate average income and expense
-        average_income, average_expense = self.get_average_monthly_income_expense()
+class FixedAssetDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = FixedAsset.objects.all()
+    serializer_class = FixedAssetSerializer
 
-        # Generate projections for the specified number of months
-        projected_income = [average_income] * months
-        projected_expense = [average_expense] * months
 
-        # Prepare the response data
-        response_data = {
-            "months": months,
-            "average_income": average_income,
-            "average_expense": average_expense,
-            "projected_income": projected_income,
-            "projected_expense": projected_expense,
-        }
+# 5. Expense Management Views
+class ExpenseListCreateView(generics.ListCreateAPIView):
+    queryset = Expense.objects.all()
+    serializer_class = ExpenseSerializer
 
-        # Instead of validating, we can directly pass the response_data to serializer for representation
-        serializer = ProjectionSerializer(response_data)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+
+class ExpenseDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Expense.objects.all()
+    serializer_class = ExpenseSerializer
+
+
+# 6. Budgeting Views
+class BudgetListCreateView(generics.ListCreateAPIView):
+    queryset = Budget.objects.all()
+    serializer_class = BudgetSerializer
+
+
+class BudgetDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Budget.objects.all()
+    serializer_class = BudgetSerializer
+
+
+# 7. Payroll Views
+class EmployeeListCreateView(generics.ListCreateAPIView):
+    queryset = Employee.objects.all()
+    serializer_class = EmployeeSerializer
+
+
+class EmployeeDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Employee.objects.all()
+    serializer_class = EmployeeSerializer
+
+
+class PayrollListCreateView(generics.ListCreateAPIView):
+    queryset = Payroll.objects.all()
+    serializer_class = PayrollSerializer
+
+
+class PayrollDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Payroll.objects.all()
+    serializer_class = PayrollSerializer
+
+
+# 8. Security and User Management
+class CompanyListCreateView(generics.ListCreateAPIView):
+    queryset = Company.objects.all()
+    serializer_class = CompanySerializer
+
+
+class CompanyDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Company.objects.all()
+    serializer_class = CompanySerializer
+
+
+# 9. Audit Logs
+class AuditLogListView(generics.ListAPIView):
+    queryset = AuditLog.objects.all()
+    serializer_class = AuditLogSerializer
+
+
+# 10. Analytics Views
+class FinancialMetricListView(generics.ListCreateAPIView):
+    queryset = FinancialMetric.objects.all()
+    serializer_class = FinancialMetricSerializer
